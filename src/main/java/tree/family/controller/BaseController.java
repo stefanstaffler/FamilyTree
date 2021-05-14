@@ -8,7 +8,7 @@ import tree.family.view.BaseView;
  */
 public class BaseController {
     // Base view
-    private final BaseView view;
+    protected final BaseView view;
 
     /**
      * Constructor with all necessary base parameters.
