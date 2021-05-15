@@ -5,6 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import tree.family.controller.MainController;
+import tree.family.dao.PersonDaoInterface;
+import tree.family.dao.PersonDaoList;
+import tree.family.model.MainModel;
 import tree.family.view.MainView;
 
 /**
@@ -17,12 +20,16 @@ public class Main extends Application {
 
     /**
      * Start method of this application. Shows the main window.
+     *
      * @param stage: This is the primary stage to set the main scene.
      */
     @Override
     public void start(Stage stage) {
+        PersonDaoInterface personDao = new PersonDaoList();
+
         MainView mainView = new MainView();
-        MainController mainController = new MainController(mainView);
+        MainModel mainModel = new MainModel(personDao);
+        MainController mainController = new MainController(mainView, mainModel);
 
         Pane rootPane = mainView.getRootPane();
         Scene scene = new Scene(rootPane, rootPane.getMinWidth(), rootPane.getMinHeight());

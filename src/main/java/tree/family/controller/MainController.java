@@ -3,11 +3,8 @@ package tree.family.controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import tree.family.model.MainModel;
 import tree.family.view.AddPersonView;
 import tree.family.view.MainView;
 
@@ -21,21 +18,24 @@ public class MainController extends BaseController {
     @FXML
     private Button exitButton;
 
+    // Controller of the add person window
     private final AddPersonController addPersonController;
 
     /**
      * Constructor with all necessary parameters.
+     *
      * @param view: Main view
      */
-    public MainController(MainView view) {
+    public MainController(MainView view, MainModel model) {
         super(view);
 
         AddPersonView addPersonView = new AddPersonView();
-        addPersonController = new AddPersonController(addPersonView);
+        addPersonController = new AddPersonController(addPersonView, model);
     }
 
     /**
      * This method is called when a button from the left side menu is pressed
+     *
      * @param actionEvent: Action event
      */
     @FXML
