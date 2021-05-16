@@ -1,5 +1,6 @@
 package tree.family.controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,11 @@ import org.controlsfx.control.CheckComboBox;
 import tree.family.data.Person;
 import tree.family.model.MainModel;
 import tree.family.view.AddPersonView;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Class for the add person controller
@@ -87,6 +93,24 @@ public class AddPersonController extends BaseController {
      * Shows the window
      */
     public void show() {
+        firstNameTextField.clear();
+        middleNameTextField.clear();
+        surnameTextField.clear();
+
+        birthdayTextField.clear();
+        birthplaceTextField.clear();
+
+        dyingDayTextField.clear();
+        placeOfDeathTextField.clear();
+
+        List<Person> personList = model.getAllPersons();
+
+        fatherComboBox.setItems(FXCollections.observableList(personList));
+        motherComboBox.setItems(FXCollections.observableList(personList));
+        fatherComboBox.setValue(null);
+        motherComboBox.setValue(null);
+        childrenCheckComboBox.getCheckModel().clearChecks();
+
         stage.showAndWait();
     }
 
@@ -110,7 +134,6 @@ public class AddPersonController extends BaseController {
      * Method to add a person to the main model
      */
     private void addPerson() {
-        // TODO Add this person using the model
         String firstName = firstNameTextField.getText();
         String middleName = middleNameTextField.getText();
         String surname = surnameTextField.getText();
@@ -124,6 +147,34 @@ public class AddPersonController extends BaseController {
         Person father = fatherComboBox.getValue();
         Person mother = motherComboBox.getValue();
         ObservableList<Person> children = childrenCheckComboBox.getCheckModel().getCheckedItems();
+
+        Person person = new Person();
+
+        person.setFirstName(firstName);
+        person.setMiddleName(middleName);
+        person.setSurname(surname);
+
+        try {
+            if (birthday != null && !birthday.isEmpty())
+                person.setBirthday(DateFormat.getDateInstance().parse(birthday));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        person.setBirthplace(birthplace);
+
+        try {
+            if (dyingDay != null && !dyingDay.isEmpty())
+                person.setDyingDay(DateFormat.getDateInstance().parse(dyingDay));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        person.setPlaceOfDeath(placeOfDeath);
+
+        person.setFather(father);
+        person.setMother(mother);
+        person.setChildren(children);
+
+        model.addPerson(person);
 
         stage.close();
     }

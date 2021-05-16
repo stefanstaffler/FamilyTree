@@ -2,6 +2,7 @@ package tree.family.data;
 
 import lombok.*;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Person {
     // Id of the person
     @EqualsAndHashCode.Include
@@ -40,4 +40,18 @@ public class Person {
     // Marriage
     private Person marriagePartner;
     private Date dateOfMarriage;
+
+    @Override
+    public String toString() {
+        String personString = "";
+
+        personString += firstName + " " + surname;
+        personString += " (";
+        personString += birthday != null ? DateFormat.getDateInstance(DateFormat.MEDIUM).format(birthday) : "";
+        personString += " - ";
+        personString += dyingDay != null ? DateFormat.getDateInstance(DateFormat.MEDIUM).format(dyingDay) : "";
+        personString += ")";
+
+        return personString;
+    }
 }
