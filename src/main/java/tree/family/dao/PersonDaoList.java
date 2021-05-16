@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class PersonDaoList implements PersonDaoInterface {
     // List which contains the persons
-    private List<Person> personList;
+    private final List<Person> personList;
 
     /**
      * Constructor

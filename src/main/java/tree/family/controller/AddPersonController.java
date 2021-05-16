@@ -18,7 +18,6 @@ import tree.family.view.AddPersonView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ public class AddPersonController extends BaseController {
     private Stage stage;
 
     // MainModel
-    private MainModel model;
+    private final MainModel model;
 
     // Buttons from the button bar from fxml file
     @FXML
@@ -110,6 +109,7 @@ public class AddPersonController extends BaseController {
         fatherComboBox.setValue(null);
         motherComboBox.setValue(null);
         childrenCheckComboBox.getCheckModel().clearChecks();
+        childrenCheckComboBox.getItems().setAll(personList);
 
         stage.showAndWait();
     }

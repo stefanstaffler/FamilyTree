@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class MainModel {
     // Person data access object
-    private PersonDaoInterface personDao;
+    private final PersonDaoInterface personDao;
 
     /**
      * Constructor with necessary parameters

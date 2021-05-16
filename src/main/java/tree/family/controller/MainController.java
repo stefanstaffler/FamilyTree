@@ -4,9 +4,14 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import tree.family.data.Person;
 import tree.family.model.MainModel;
 import tree.family.view.AddPersonView;
 import tree.family.view.MainView;
+import tree.family.view.PersonView;
+
+import java.util.List;
 
 /**
  * Class for the main controller
@@ -21,6 +26,13 @@ public class MainController extends BaseController {
     // Controller of the add person window
     private final AddPersonController addPersonController;
 
+    // Family tree anchor pane
+    @FXML
+    private AnchorPane familyTreeAnchorPane;
+
+    // MainModel
+    private final MainModel model;
+
     /**
      * Constructor with all necessary parameters.
      *
@@ -28,6 +40,8 @@ public class MainController extends BaseController {
      */
     public MainController(MainView view, MainModel model) {
         super(view);
+
+        this.model = model;
 
         AddPersonView addPersonView = new AddPersonView();
         addPersonController = new AddPersonController(addPersonView, model);
@@ -44,6 +58,7 @@ public class MainController extends BaseController {
 
         if (sourceObject.equals(addPersonButton)) {
             showAddPersonWindow();
+            updateFamilyTree();
         } else if (sourceObject.equals(exitButton)) {
             Platform.exit();
         }
@@ -54,5 +69,19 @@ public class MainController extends BaseController {
      */
     private void showAddPersonWindow() {
         addPersonController.show();
+    }
+
+    /**
+     * Load every person from the model and create a family tree
+     */
+    private void updateFamilyTree() {
+        List<Person> personList = model.getAllPersons();
+
+        for (Person person : personList) {
+            PersonView personView = new PersonView();
+            PersonController personController = new PersonController(personView);
+            personController.setData(person);
+            familyTreeAnchorPane.getChildren().add(personController);
+        }
     }
 }
