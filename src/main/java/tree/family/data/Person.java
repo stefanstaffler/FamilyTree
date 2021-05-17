@@ -22,6 +22,9 @@ public class Person {
     @EqualsAndHashCode.Include
     private Integer id = idCount++;
 
+    // Gender of the person
+    private Gender gender;
+
     // Name
     private String firstName;
     private String middleName;
@@ -56,5 +59,14 @@ public class Person {
         personString += ")";
 
         return personString;
+    }
+
+    /**
+     * Enumeration for usage as gender
+     */
+    public enum Gender {
+        NONE,
+        MAN,
+        WOMAN
     }
 }

@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -18,7 +19,9 @@ import tree.family.view.AddPersonView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class for the add person controller
@@ -37,6 +40,9 @@ public class AddPersonController extends BaseController {
     private Button addButton;
 
     // Other fields from the fxml file
+    // Gender field
+    @FXML
+    private ChoiceBox<Person.Gender> genderChoiceBox;
     // Name fields
     @FXML
     private TextField firstNameTextField;
@@ -92,6 +98,9 @@ public class AddPersonController extends BaseController {
      * Shows the window
      */
     public void show() {
+        genderChoiceBox.setItems(FXCollections.observableList(Arrays.asList(Person.Gender.values())));
+        genderChoiceBox.setValue(Person.Gender.NONE);
+
         firstNameTextField.clear();
         middleNameTextField.clear();
         surnameTextField.clear();
@@ -103,9 +112,11 @@ public class AddPersonController extends BaseController {
         placeOfDeathTextField.clear();
 
         List<Person> personList = model.getAllPersons();
+        List<Person> manPersonList = personList.stream().filter(person -> person.getGender() == Person.Gender.MAN).collect(Collectors.toList());
+        List<Person> womanPersonList = personList.stream().filter(person -> person.getGender() == Person.Gender.WOMAN).collect(Collectors.toList());
 
-        fatherComboBox.setItems(FXCollections.observableList(personList));
-        motherComboBox.setItems(FXCollections.observableList(personList));
+        fatherComboBox.setItems(FXCollections.observableList(manPersonList));
+        motherComboBox.setItems(FXCollections.observableList(womanPersonList));
         fatherComboBox.setValue(null);
         motherComboBox.setValue(null);
         childrenCheckComboBox.getCheckModel().clearChecks();
@@ -134,6 +145,8 @@ public class AddPersonController extends BaseController {
      * Method to add a person to the main model
      */
     private void addPerson() {
+        Person.Gender gender = genderChoiceBox.getValue();
+
         String firstName = firstNameTextField.getText();
         String middleName = middleNameTextField.getText();
         String surname = surnameTextField.getText();
@@ -149,6 +162,8 @@ public class AddPersonController extends BaseController {
         ObservableList<Person> children = childrenCheckComboBox.getCheckModel().getCheckedItems();
 
         Person person = new Person();
+
+        person.setGender(gender);
 
         person.setFirstName(firstName);
         person.setMiddleName(middleName);
