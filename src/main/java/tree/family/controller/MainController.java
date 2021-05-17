@@ -1,8 +1,10 @@
 package tree.family.controller;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import tree.family.data.Person;
@@ -12,6 +14,7 @@ import tree.family.view.MainView;
 import tree.family.view.PersonView;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class for the main controller
@@ -77,11 +80,19 @@ public class MainController extends BaseController {
     private void updateFamilyTree() {
         List<Person> personList = model.getAllPersons();
 
-        for (Person person : personList) {
-            PersonView personView = new PersonView();
-            PersonController personController = new PersonController(personView);
-            personController.setData(person);
-            familyTreeAnchorPane.getChildren().add(personController);
-        }
+        ObservableList<Node> familyTreeNodeList = familyTreeAnchorPane.getChildren();
+
+        Person rootPerson = personList.stream().filter(person -> person.getChildren() == null || person.getChildren().isEmpty()).collect(Collectors.toList()).get(0);
+
+        PersonView personView = new PersonView();
+        PersonController personController = new PersonController(personView);
+
+        personView.getRootPane().setLayoutX(0);
+        double totalHeight = familyTreeAnchorPane.getHeight();
+        double objectHeight = personView.getRootPane().getPrefHeight();
+        personView.getRootPane().setLayoutY(totalHeight / 2 - objectHeight / 2);
+
+        personController.setData(rootPerson);
+        familyTreeNodeList.add(personController);
     }
 }
