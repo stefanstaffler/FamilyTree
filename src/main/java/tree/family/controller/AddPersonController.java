@@ -189,6 +189,25 @@ public class AddPersonController extends BaseController {
         person.setMother(mother);
         person.setChildren(children);
 
+        if (father != null) {
+            father.getChildren().add(person);
+        }
+        if (mother != null) {
+            mother.getChildren().add(person);
+        }
+
+        if (children != null && !children.isEmpty()) {
+            if (person.getGender() == Person.Gender.MAN) {
+                for (Person child : children) {
+                    child.setFather(person);
+                }
+            } else if (person.getGender() == Person.Gender.WOMAN) {
+                for (Person child : children) {
+                    child.setMother(person);
+                }
+            }
+        }
+
         model.addPerson(person);
 
         stage.close();
