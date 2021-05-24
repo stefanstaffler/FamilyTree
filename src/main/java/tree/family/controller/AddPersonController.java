@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.Getter;
 import org.controlsfx.control.CheckComboBox;
 import tree.family.data.Person;
 import tree.family.model.MainModel;
@@ -67,6 +68,10 @@ public class AddPersonController extends BaseController {
     private ComboBox<Person> motherComboBox;
     @FXML
     private CheckComboBox<Person> childrenCheckComboBox;
+
+    // Person
+    @Getter
+    private Person person;
 
     /**
      * Constructor with all necessary parameters
@@ -161,7 +166,7 @@ public class AddPersonController extends BaseController {
         Person mother = motherComboBox.getValue();
         ObservableList<Person> children = childrenCheckComboBox.getCheckModel().getCheckedItems();
 
-        Person person = new Person();
+        person = new Person();
 
         person.setGender(gender);
 

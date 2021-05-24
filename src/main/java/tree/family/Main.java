@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import tree.family.controller.MainController;
 import tree.family.dao.PersonDaoInterface;
 import tree.family.dao.PersonDaoList;
+import tree.family.graph.DrawGraph;
+import tree.family.graph.GraphInterface;
 import tree.family.model.MainModel;
 import tree.family.view.MainView;
 
@@ -35,6 +37,10 @@ public class Main extends Application {
         Scene scene = new Scene(rootPane, rootPane.getMinWidth(), rootPane.getMinHeight());
 
         stage.setScene(scene);
+
+        GraphInterface graph = new DrawGraph();
+        mainController.setGraph(graph);
+
         stage.show();
     }
 }

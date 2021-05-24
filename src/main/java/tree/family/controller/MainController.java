@@ -1,20 +1,15 @@
 package tree.family.controller;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import tree.family.data.Person;
+import tree.family.graph.GraphInterface;
 import tree.family.model.MainModel;
-import tree.family.view.AddPersonView;
 import tree.family.view.MainView;
-import tree.family.view.PersonView;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Class for the main controller
@@ -22,12 +17,7 @@ import java.util.stream.Collectors;
 public class MainController extends BaseController {
     // Buttons from fxml file
     @FXML
-    private Button addPersonButton;
-    @FXML
     private Button exitButton;
-
-    // Controller of the add person window
-    private final AddPersonController addPersonController;
 
     // Family tree anchor pane
     @FXML
@@ -35,6 +25,9 @@ public class MainController extends BaseController {
 
     // MainModel
     private final MainModel model;
+
+    // Graph instance
+    private GraphInterface graph;
 
     /**
      * Constructor with all necessary parameters.
@@ -45,9 +38,6 @@ public class MainController extends BaseController {
         super(view);
 
         this.model = model;
-
-        AddPersonView addPersonView = new AddPersonView();
-        addPersonController = new AddPersonController(addPersonView, model);
     }
 
     /**
@@ -59,40 +49,27 @@ public class MainController extends BaseController {
     private void handleMenu(ActionEvent actionEvent) {
         Object sourceObject = actionEvent.getSource();
 
-        if (sourceObject.equals(addPersonButton)) {
-            showAddPersonWindow();
-            updateFamilyTree();
-        } else if (sourceObject.equals(exitButton)) {
+        if (sourceObject.equals(exitButton)) {
             Platform.exit();
         }
     }
 
     /**
-     * Shows the window to add a person
+     * Sets the target graph in the view
+     *
+     * @param graph: Instance of the target graph
      */
-    private void showAddPersonWindow() {
-        addPersonController.show();
-    }
+    public void setGraph(GraphInterface graph) {
+        if (this.graph == null) {
+            this.graph = graph;
+        }
 
-    /**
-     * Load every person from the model and create a family tree
-     */
-    private void updateFamilyTree() {
-        List<Person> personList = model.getAllPersons();
+        familyTreeAnchorPane.getChildren().clear();
 
-        ObservableList<Node> familyTreeNodeList = familyTreeAnchorPane.getChildren();
+        List<PersonController> personControllerList = graph.getPersonButtons(familyTreeAnchorPane.getPrefHeight(), model);
 
-        Person rootPerson = personList.stream().filter(person -> person.getChildren() == null || person.getChildren().isEmpty()).collect(Collectors.toList()).get(0);
-
-        PersonView personView = new PersonView();
-        PersonController personController = new PersonController(personView);
-
-        personView.getRootPane().setLayoutX(0);
-        double totalHeight = familyTreeAnchorPane.getHeight();
-        double objectHeight = personView.getRootPane().getPrefHeight();
-        personView.getRootPane().setLayoutY(totalHeight / 2 - objectHeight / 2);
-
-        personController.setData(rootPerson);
-        familyTreeNodeList.add(personController);
+        for (PersonController personController : personControllerList) {
+            familyTreeAnchorPane.getChildren().add(personController);
+        }
     }
 }
