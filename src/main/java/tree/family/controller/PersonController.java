@@ -52,6 +52,8 @@ public class PersonController extends BorderPane {
         addPersonController.show();
 
         Person person = addPersonController.getPerson();
-        setData(person);
+        if (person != null) {
+            setData(person);
+        }
     }
 }

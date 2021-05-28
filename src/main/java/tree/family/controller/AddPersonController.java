@@ -140,6 +140,7 @@ public class AddPersonController extends BaseController {
         Object sourceObject = actionEvent.getSource();
 
         if (sourceObject.equals(cancelButton)) {
+            person = null;
             stage.close();
         } else if (sourceObject.equals(addButton)) {
             addPerson();
