@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Line;
 import tree.family.graph.GraphInterface;
 import tree.family.model.MainModel;
 import tree.family.view.MainView;
@@ -67,9 +68,9 @@ public class MainController extends BaseController {
         familyTreeAnchorPane.getChildren().clear();
 
         List<PersonController> personControllerList = graph.getPersonButtons(familyTreeAnchorPane.getPrefHeight(), model);
+        List<Line> lineList = graph.getLines(familyTreeAnchorPane.getPrefHeight(), model);
 
-        for (PersonController personController : personControllerList) {
-            familyTreeAnchorPane.getChildren().add(personController);
-        }
+        familyTreeAnchorPane.getChildren().addAll(personControllerList);
+        familyTreeAnchorPane.getChildren().addAll(lineList);
     }
 }
