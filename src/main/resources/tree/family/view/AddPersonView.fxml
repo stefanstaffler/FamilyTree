@@ -3,7 +3,6 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.controlsfx.control.*?>
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
@@ -63,28 +62,6 @@
                         <TextField fx:id="placeOfDeathTextField" prefWidth="150.0" />
                      </children>
                   </HBox>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-               <children>
-                  <HBox alignment="CENTER_LEFT">
-                     <children>
-                        <Label prefWidth="100.0" text="Father:" />
-                        <ComboBox fx:id="fatherComboBox" prefWidth="150.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT">
-                     <children>
-                        <Label prefWidth="100.0" text="Mother:" />
-                        <ComboBox fx:id="motherComboBox" prefWidth="150.0" />
-                     </children>
-                  </HBox>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT">
-               <children>
-                  <Label prefWidth="100.0" text="Children:" />
-                  <CheckComboBox fx:id="childrenCheckComboBox" prefWidth="150.0" />
                </children>
             </HBox>
          </children>

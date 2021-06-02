@@ -38,11 +38,6 @@ public class Person {
     private Date dyingDay;
     private String placeOfDeath;
 
-    // Relatives
-    private Person mother;
-    private Person father;
-    private List<Person> children;
-
     // Marriage
     private Person marriagePartner;
     private Date dateOfMarriage;

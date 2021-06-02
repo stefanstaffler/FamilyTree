@@ -1,19 +1,16 @@
 package tree.family.controller;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
-import org.controlsfx.control.CheckComboBox;
 import tree.family.data.Person;
 import tree.family.model.MainModel;
 import tree.family.view.AddPersonView;
@@ -21,8 +18,6 @@ import tree.family.view.AddPersonView;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Class for the add person controller
@@ -61,13 +56,6 @@ public class AddPersonController extends BaseController {
     private TextField dyingDayTextField;
     @FXML
     private TextField placeOfDeathTextField;
-    // Relatives fields
-    @FXML
-    private ComboBox<Person> fatherComboBox;
-    @FXML
-    private ComboBox<Person> motherComboBox;
-    @FXML
-    private CheckComboBox<Person> childrenCheckComboBox;
 
     // Person
     @Getter
@@ -116,17 +104,6 @@ public class AddPersonController extends BaseController {
         dyingDayTextField.clear();
         placeOfDeathTextField.clear();
 
-        List<Person> personList = model.getAllPersons();
-        List<Person> manPersonList = personList.stream().filter(person -> person.getGender() == Person.Gender.MAN).collect(Collectors.toList());
-        List<Person> womanPersonList = personList.stream().filter(person -> person.getGender() == Person.Gender.WOMAN).collect(Collectors.toList());
-
-        fatherComboBox.setItems(FXCollections.observableList(manPersonList));
-        motherComboBox.setItems(FXCollections.observableList(womanPersonList));
-        fatherComboBox.setValue(null);
-        motherComboBox.setValue(null);
-        childrenCheckComboBox.getCheckModel().clearChecks();
-        childrenCheckComboBox.getItems().setAll(personList);
-
         stage.showAndWait();
     }
 
@@ -163,10 +140,6 @@ public class AddPersonController extends BaseController {
         String dyingDay = dyingDayTextField.getText();
         String placeOfDeath = placeOfDeathTextField.getText();
 
-        Person father = fatherComboBox.getValue();
-        Person mother = motherComboBox.getValue();
-        ObservableList<Person> children = childrenCheckComboBox.getCheckModel().getCheckedItems();
-
         person = new Person();
 
         person.setGender(gender);
@@ -190,29 +163,6 @@ public class AddPersonController extends BaseController {
             e.printStackTrace();
         }
         person.setPlaceOfDeath(placeOfDeath);
-
-        person.setFather(father);
-        person.setMother(mother);
-        person.setChildren(children);
-
-        if (father != null) {
-            father.getChildren().add(person);
-        }
-        if (mother != null) {
-            mother.getChildren().add(person);
-        }
-
-        if (children != null && !children.isEmpty()) {
-            if (person.getGender() == Person.Gender.MAN) {
-                for (Person child : children) {
-                    child.setFather(person);
-                }
-            } else if (person.getGender() == Person.Gender.WOMAN) {
-                for (Person child : children) {
-                    child.setMother(person);
-                }
-            }
-        }
 
         model.addPerson(person);
 
