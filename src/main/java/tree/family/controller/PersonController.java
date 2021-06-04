@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import lombok.Getter;
 import tree.family.data.Person;
 import tree.family.model.MainModel;
 import tree.family.view.AddPersonView;
@@ -14,8 +15,16 @@ public class PersonController extends BorderPane {
     @FXML
     private Button personButton;
 
+    // PersonView
+    @Getter
+    private PersonView view;
+
     // Main model
     private MainModel model;
+
+    // Person object
+    @Getter
+    private Person person;
 
     /**
      * Constructor with all necessary base parameters.
@@ -28,6 +37,7 @@ public class PersonController extends BorderPane {
         view.getFxmlLoader().setRoot(this);
         view.load();
 
+        this.view = view;
         this.model = model;
     }
 
@@ -37,6 +47,7 @@ public class PersonController extends BorderPane {
      * @param person: Instance of the person
      */
     public void setData(Person person) {
+        this.person = person;
         personButton.setText(person.getFirstName() + " " + person.getSurname());
     }
 
@@ -51,7 +62,7 @@ public class PersonController extends BorderPane {
         AddPersonController addPersonController = new AddPersonController(addPersonView, model);
         addPersonController.show();
 
-        Person person = addPersonController.getPerson();
+        person = addPersonController.getPerson();
         if (person != null) {
             setData(person);
         }

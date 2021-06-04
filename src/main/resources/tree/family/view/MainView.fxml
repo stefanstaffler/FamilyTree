@@ -7,11 +7,16 @@
    <left>
       <VBox alignment="CENTER" prefHeight="600.0" prefWidth="150.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleMenu" text="Save" />
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#handleMenu" text="Exit" />
          </children>
       </VBox>
    </left>
    <center>
-      <AnchorPane fx:id="familyTreeAnchorPane" prefHeight="600.0" BorderPane.alignment="CENTER" />
+      <ScrollPane BorderPane.alignment="CENTER">
+         <content>
+            <AnchorPane fx:id="familyTreeAnchorPane" prefHeight="600.0" prefWidth="650.0" />
+         </content>
+      </ScrollPane>
    </center>
 </BorderPane>
