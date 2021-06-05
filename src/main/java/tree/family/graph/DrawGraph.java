@@ -30,6 +30,8 @@ public class DrawGraph implements GraphInterface {
         int distanceXDefault = 25;
         int distanceX = distanceXDefault;
 
+        int personId = 1;
+
         for (int layer = 0; layer <= 3; layer++) {
             int numberOfButtonsInLayer = (int) Math.pow(2, layer);
 
@@ -38,8 +40,9 @@ public class DrawGraph implements GraphInterface {
                 PersonController personController = new PersonController(personView, model);
 
                 Person person = new Person();
+                person.setId(personId);
                 person.setFirstName("New");
-                person.setSurname("Person");
+                person.setSurname("Person " + personId);
                 personController.setData(person);
 
                 personView.getRootPane().setLayoutX(distanceX);
@@ -52,13 +55,15 @@ public class DrawGraph implements GraphInterface {
                 PersonController pController = new PersonController(pView, model);
                 distanceX += pView.getRootPane().getPrefWidth() + distanceXDefault;
 
+                personId = numberOfButtonsInLayer + numberOfButtonsInLayer / 2 - 1;
                 for (int i = 0; i < numberOfButtonsInLayer / 2; i++) {
                     PersonView personView = new PersonView();
                     PersonController personController = new PersonController(personView, model);
 
                     Person person = new Person();
+                    person.setId(personId);
                     person.setFirstName("New");
-                    person.setSurname("Person");
+                    person.setSurname("Person " + personId);
                     personController.setData(person);
 
                     personView.getRootPane().setLayoutX(distanceX);
@@ -67,14 +72,19 @@ public class DrawGraph implements GraphInterface {
                                     - 2 * distance * i
                     );
                     personControllerList.add(personController);
+
+                    personId--;
                 }
+
+                personId = numberOfButtonsInLayer + numberOfButtonsInLayer / 2;
                 for (int i = 0; i < numberOfButtonsInLayer / 2; i++) {
                     PersonView personView = new PersonView();
                     PersonController personController = new PersonController(personView, model);
 
                     Person person = new Person();
+                    person.setId(personId);
                     person.setFirstName("New");
-                    person.setSurname("Person");
+                    person.setSurname("Person " + personId);
                     personController.setData(person);
 
                     personView.getRootPane().setLayoutX(distanceX);
@@ -83,6 +93,8 @@ public class DrawGraph implements GraphInterface {
                                     + 2 * distance * i - personView.getRootPane().getPrefHeight() / 2
                     );
                     personControllerList.add(personController);
+
+                    personId++;
                 }
             }
         }

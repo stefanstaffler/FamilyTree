@@ -15,12 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Person {
-    // Counter for id
-    private static Integer idCount = 0;
-
     // Id of the person
     @EqualsAndHashCode.Include
-    private Integer id = idCount++;
+    private Integer id;
 
     // Gender of the person
     private Gender gender;

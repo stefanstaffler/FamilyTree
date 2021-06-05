@@ -8,6 +8,8 @@ import tree.family.controller.PersonController;
 import tree.family.data.Person;
 import tree.family.view.PersonView;
 
+import java.util.regex.Pattern;
+
 /**
  * Graph util class
  * Every useful method which is needed more than once is defined in this class
@@ -29,7 +31,7 @@ public class GraphUtil {
                 Person person = personController.getPerson();
                 String personName = person.getFirstName() + " " + person.getSurname();
 
-                if (!personName.equals("New Person")) {
+                if (!Pattern.matches("New Person [\\d]+", personName)) {
                     PersonView snapshotPersonView = new PersonView();
                     PersonController snapshotPersonController = new PersonController(snapshotPersonView, null);
 
