@@ -10,6 +10,9 @@ import tree.family.model.MainModel;
 import tree.family.view.AddPersonView;
 import tree.family.view.PersonView;
 
+/**
+ * Controller class of the person who is visible on the pane
+ */
 public class PersonController extends BorderPane {
     // Button
     @FXML
