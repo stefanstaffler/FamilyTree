@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Data class of a single person
@@ -38,6 +37,26 @@ public class Person {
     // Marriage
     private Person marriagePartner;
     private Date dateOfMarriage;
+
+    /**
+     * Set id of the person and the corresponding gender.
+     * Gender is calculated of the id.
+     *
+     * @param id: Id of the person (even id is a man, odd id is a woman and
+     *            otherwise gender of none)
+     */
+    public void setId(Integer id) {
+        this.id = id;
+        if (id == 1) {
+            gender = Gender.NONE;
+        } else if (id % 2 == 0) {
+            gender = Gender.MAN;
+        } else if (id % 2 == 1) {
+            gender = Gender.WOMAN;
+        } else {
+            gender = Gender.NONE;
+        }
+    }
 
     @Override
     public String toString() {

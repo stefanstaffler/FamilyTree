@@ -62,7 +62,7 @@ public class PersonController extends BorderPane {
     @FXML
     private void handlePersonButton(ActionEvent actionEvent) {
         AddPersonView addPersonView = new AddPersonView();
-        AddPersonController addPersonController = new AddPersonController(addPersonView, model);
+        AddPersonController addPersonController = new AddPersonController(addPersonView, model, person);
         addPersonController.show();
 
         person = addPersonController.getPerson();

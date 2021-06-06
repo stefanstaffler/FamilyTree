@@ -64,12 +64,15 @@ public class AddPersonController extends BaseController {
     /**
      * Constructor with all necessary parameters
      *
-     * @param view: Add person view
+     * @param view:   Add person view
+     * @param model:  Main model
+     * @param person: Person who exists already
      */
-    public AddPersonController(AddPersonView view, MainModel model) {
+    public AddPersonController(AddPersonView view, MainModel model, Person person) {
         super(view);
 
         this.model = model;
+        this.person = person;
 
         initWindow();
     }
@@ -92,7 +95,7 @@ public class AddPersonController extends BaseController {
      */
     public void show() {
         genderChoiceBox.setItems(FXCollections.observableList(Arrays.asList(Person.Gender.values())));
-        genderChoiceBox.setValue(Person.Gender.NONE);
+        genderChoiceBox.setValue(person.getGender());
 
         firstNameTextField.clear();
         middleNameTextField.clear();
@@ -117,7 +120,6 @@ public class AddPersonController extends BaseController {
         Object sourceObject = actionEvent.getSource();
 
         if (sourceObject.equals(cancelButton)) {
-            person = null;
             stage.close();
         } else if (sourceObject.equals(addButton)) {
             addPerson();
