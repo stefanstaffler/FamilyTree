@@ -34,10 +34,6 @@ public class Person {
     private Date dyingDay;
     private String placeOfDeath;
 
-    // Marriage
-    private Person marriagePartner;
-    private Date dateOfMarriage;
-
     /**
      * Set id of the person and the corresponding gender.
      * Gender is calculated of the id.

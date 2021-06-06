@@ -20,10 +20,10 @@ public class PersonController extends BorderPane {
 
     // PersonView
     @Getter
-    private PersonView view;
+    private final PersonView view;
 
     // Main model
-    private MainModel model;
+    private final MainModel model;
 
     // Person object
     @Getter

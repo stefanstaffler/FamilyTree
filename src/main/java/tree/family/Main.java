@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import tree.family.controller.MainController;
+import tree.family.dao.MarriageDaoInterface;
+import tree.family.dao.MarriageDaoList;
 import tree.family.dao.PersonDaoInterface;
 import tree.family.dao.PersonDaoList;
 import tree.family.graph.DrawGraph;
@@ -28,9 +30,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         PersonDaoInterface personDao = new PersonDaoList();
+        MarriageDaoInterface marriageDao = new MarriageDaoList();
 
         MainView mainView = new MainView();
-        MainModel mainModel = new MainModel(personDao);
+        MainModel mainModel = new MainModel(personDao, marriageDao);
         MainController mainController = new MainController(mainView, mainModel);
 
         Pane rootPane = mainView.getRootPane();

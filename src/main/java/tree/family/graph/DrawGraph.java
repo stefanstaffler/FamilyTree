@@ -1,9 +1,11 @@
 package tree.family.graph;
 
 import javafx.scene.shape.Line;
+import tree.family.controller.MarriageController;
 import tree.family.controller.PersonController;
 import tree.family.data.Person;
 import tree.family.model.MainModel;
+import tree.family.view.MarriageView;
 import tree.family.view.PersonView;
 
 import java.util.LinkedList;
@@ -159,5 +161,64 @@ public class DrawGraph implements GraphInterface {
         }
 
         return lineList;
+    }
+
+    /**
+     * Creates the marriage buttons and calculates the corresponding positions
+     *
+     * @param paneHeight: The height of the target pane.
+     * @param model:      Main model
+     * @return the list of marriage buttons
+     */
+    @Override
+    public List<MarriageController> getMarriageButtons(double paneHeight, MainModel model) {
+        List<MarriageController> marriageControllerList = new LinkedList<>();
+
+        double middlePosition = paneHeight / 2;
+        double deltaXDefault = 25;
+        double distance = middlePosition;
+
+        PersonView pView = new PersonView();
+        PersonController pController = new PersonController(pView, model);
+
+        double positionX = deltaXDefault + pView.getRootPane().getPrefWidth() + deltaXDefault / 2;
+
+        for (int layer = 1; layer <= 3; layer++) {
+            if (layer == 1) {
+                MarriageView marriageView = new MarriageView();
+                MarriageController marriageController = new MarriageController(marriageView, model);
+
+                marriageView.getRootPane().setLayoutX(positionX);
+                marriageView.getRootPane().setLayoutY(middlePosition - marriageView.getRootPane().getPrefHeight() / 2);
+
+                marriageControllerList.add(marriageController);
+            } else {
+                int numberOfButtonsInLayer = (int) Math.pow(2, layer);
+                distance /= 2;
+
+                for (int i = 0; i < numberOfButtonsInLayer / 4; i++) {
+                    MarriageView marriageView = new MarriageView();
+                    MarriageController marriageController = new MarriageController(marriageView, model);
+
+                    marriageView.getRootPane().setLayoutX(positionX);
+                    marriageView.getRootPane().setLayoutY(middlePosition - distance - 2 * distance * i - marriageView.getRootPane().getPrefHeight() / 2);
+
+                    marriageControllerList.add(marriageController);
+                }
+                for (int i = 0; i < numberOfButtonsInLayer / 4; i++) {
+                    MarriageView marriageView = new MarriageView();
+                    MarriageController marriageController = new MarriageController(marriageView, model);
+
+                    marriageView.getRootPane().setLayoutX(positionX);
+                    marriageView.getRootPane().setLayoutY(middlePosition + distance + 2 * distance * i - marriageView.getRootPane().getPrefHeight() / 2);
+
+                    marriageControllerList.add(marriageController);
+                }
+            }
+
+            positionX += deltaXDefault + pView.getRootPane().getPrefWidth();
+        }
+
+        return marriageControllerList;
     }
 }

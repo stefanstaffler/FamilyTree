@@ -86,8 +86,11 @@ public class MainController extends BaseController {
 
         List<PersonController> personControllerList = graph.getPersonButtons(familyTreeAnchorPane.getPrefHeight(), model);
         List<Line> lineList = graph.getLines(familyTreeAnchorPane.getPrefHeight(), model);
+        List<MarriageController> marriageControllerList =
+                graph.getMarriageButtons(familyTreeAnchorPane.getPrefHeight(), model);
 
         familyTreeAnchorPane.getChildren().addAll(personControllerList);
         familyTreeAnchorPane.getChildren().addAll(lineList);
+        familyTreeAnchorPane.getChildren().addAll(marriageControllerList);
     }
 }

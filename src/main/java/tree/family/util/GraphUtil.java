@@ -1,11 +1,15 @@
 package tree.family.util;
 
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import tree.family.controller.MarriageController;
 import tree.family.controller.PersonController;
+import tree.family.data.Marriage;
 import tree.family.data.Person;
+import tree.family.view.MarriageView;
 import tree.family.view.PersonView;
 
 import java.util.regex.Pattern;
@@ -46,6 +50,21 @@ public class GraphUtil {
                     if (line != null) {
                         anchorPane.getChildren().add(line);
                     }
+                }
+            } else if (node instanceof MarriageController) {
+                MarriageController marriageController = (MarriageController) node;
+                Marriage marriage = marriageController.getMarriage();
+
+                if (marriage != null) {
+                    MarriageView snapshotMarriageView = new MarriageView();
+                    MarriageController snapshotMarriageController = new MarriageController(snapshotMarriageView, null);
+
+                    MarriageView marriageView = marriageController.getView();
+                    snapshotMarriageView.getRootPane().setLayoutX(marriageView.getRootPane().getLayoutX());
+                    snapshotMarriageView.getRootPane().setLayoutY(marriageView.getRootPane().getLayoutY());
+
+                    snapshotMarriageController.setData(marriage);
+                    anchorPane.getChildren().add(snapshotMarriageController);
                 }
             }
         }

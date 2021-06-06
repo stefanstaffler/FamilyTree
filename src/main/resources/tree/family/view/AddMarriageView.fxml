@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="200.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Label prefWidth="150.0" text="Date of marriage:" />
+                  <TextField fx:id="dateTextField" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+               <children>
+                  <Label prefWidth="150.0" text="Place of marriage:" />
+                  <TextField fx:id="placeTextField" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="40.0" right="40.0" />
+         </padding>
+      </VBox>
+   </center>
+   <bottom>
+      <ButtonBar prefHeight="40.0" BorderPane.alignment="CENTER">
+        <buttons>
+            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleButtonBar" text="Cancel" />
+          <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleButtonBar" text="Add" />
+        </buttons>
+         <BorderPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </BorderPane.margin>
+      </ButtonBar>
+   </bottom>
+</BorderPane>
